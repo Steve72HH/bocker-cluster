@@ -1,8 +1,11 @@
 ---
-- name: Install CrowdSec
-  hosts: all
+- hosts: all
   become: yes
   tasks:
-    - name: Install CrowdSec
-      apt:
-        name: crowdsec
+    - apt:
+        name: [ufw, fail2ban]
+        update_cache: yes
+        
+    - shell: ufw deny all
+    - shell: ufw allow 22,80,443/tcp
+    - shell: ufw --force enable
