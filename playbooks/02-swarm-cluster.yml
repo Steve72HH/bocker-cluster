@@ -1,0 +1,6 @@
+- name: Init swarm
+  hosts: manager[0]
+  become: yes
+  tasks:
+    - shell: docker swarm init --advertise-addr {{ ansible_host }}
+      ignore_errors: yes
