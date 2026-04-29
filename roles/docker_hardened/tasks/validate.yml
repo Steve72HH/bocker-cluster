@@ -1,0 +1,6 @@
+- command: docker version
+  register: docker_version
+  changed_when: false
+
+- debug:
+    var: docker_version.stdout
