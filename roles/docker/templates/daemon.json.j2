@@ -1,0 +1,10 @@
+{
+  "log-driver": "{{ docker_config['log-driver'] }}",
+  "log-opts": {
+    "max-size": "{{ docker_config['log-opts']['max-size'] }}",
+    "max-file": "{{ docker_config['log-opts']['max-file'] }}"
+  },
+  "live-restore": {{ docker_config['live-restore'] | lower }},
+  "icc": {{ docker_config['icc'] | lower }},
+  "no-new-privileges": {{ docker_config['no-new-privileges'] | lower }}
+}
