@@ -1,16 +1,25 @@
-- name: Check docker
+---
+- name: Check if docker binary exists
   command: docker --version
   register: docker_check
   ignore_errors: yes
   changed_when: false
 
-- name: Set fact
+- name: Set docker_installed fact
   set_fact:
     docker_installed: "{{ docker_check.rc == 0 }}"
 
-- name: Stop if Docker exists
+- name: Debug docker state
+  debug:
+    msg: "Docker installed: {{ docker_installed }}"
+
+- name: Skip host if Docker exists
   meta: end_host
   when: docker_installed
+
+# =========================
+# INSTALLATION
+# =========================
 
 - name: Install dependencies
   apt:
@@ -18,16 +27,26 @@
       - ca-certificates
       - curl
       - gnupg
-      - iftop
-      - jq
-      - wget
-      
     update_cache: yes
 
-- name: Add Docker repo
+- name: Create keyring dir
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Docker GPG key
   shell: |
-    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+    curl -fsSL https://download.docker.com/linux/debian/gpg | \
+    gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  args:
+    creates: /etc/apt/keyrings/docker.gpg
+
+- name: Add Docker repo
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    filename: docker
+    state: present
 
 - name: Install Docker
   apt:
@@ -37,7 +56,7 @@
       - containerd.io
     update_cache: yes
 
-- name: Start Docker
+- name: Ensure Docker is running
   systemd:
     name: docker
     state: started
