@@ -1,5 +1,5 @@
 # 🚀 BOCKER CLUSTER
-
+![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/bocker-cluster.png)
 Enterprise-grade Docker Swarm Cluster with:
 
 - 🔐 Safe Docker Installation
@@ -27,13 +27,18 @@ This diagram shows the core components of the BOCKER Cluster:
 - Security via CrowdSec & Fail2Ban
 
 ## 🔥 Features
-Idempotent Ansible
-High Availability
-Secure by default
-Production ready
+- Idempotent Ansible
+- High Availability
+- Secure by default
+- Production ready
+- HA Docker Swarm
+- Traefik Loadbalancer (TLS)
+- Authelia SSO
+- Monitoring Stack
+- Security baseline
 ## 👨‍💻 Author
 
 Steve72HH
 
-![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/bocker-cluster.png)
+
 ![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/Bocker-Cluster-System-Architektur.png)
