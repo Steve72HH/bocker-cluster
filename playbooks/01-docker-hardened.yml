@@ -1,0 +1,6 @@
+---
+- name: BOCKER Enterprise Docker
+  hosts: all
+  become: yes
+  roles:
+    - docker_hardened

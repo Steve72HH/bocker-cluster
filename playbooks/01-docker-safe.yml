@@ -1,6 +1,0 @@
----
-- name: 🔐 BOCKER – Docker Safe Install
-  hosts: all
-  become: yes
-  roles:
-    - docker
