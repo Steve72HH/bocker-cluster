@@ -16,6 +16,10 @@ ansible-playbook -i inventory/inventory.ini playbooks/01-docker-safe.yml
 ansible-playbook -i inventory/inventory.ini playbooks/02-swarm-init.yml
 ansible-playbook -i inventory/inventory.ini playbooks/03-traefik.yml
 ````
+## Deploy
+```bash
+ansible-playbook playbooks/01-docker-hardened.yml
+````
 ## 🧠 Architecture Overview
 
 This diagram shows the core components of the BOCKER Cluster:
