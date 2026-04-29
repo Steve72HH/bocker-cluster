@@ -2,4 +2,10 @@ services:
   authelia:
     image: authelia/authelia
     volumes:
-      - ./config:/config
+      - ./files/authelia:/config
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.authelia.rule=Host(`${AUTH_DOMAIN}`)"
+        - "traefik.http.routers.authelia.entrypoints=websecure"
+        - "traefik.http.routers.authelia.tls.certresolver=le"
