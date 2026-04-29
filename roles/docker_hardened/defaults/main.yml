@@ -1,0 +1,6 @@
+docker_version: "5:29.4.1-1~debian.12~bookworm"
+
+docker_packages:
+  - "docker-ce={{ docker_version }}"
+  - "docker-ce-cli={{ docker_version }}"
+  - containerd.io
