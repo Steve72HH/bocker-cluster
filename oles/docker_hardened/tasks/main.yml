@@ -1,0 +1,20 @@
+---
+- name: Detect docker
+  command: docker --version
+  register: docker_check
+  ignore_errors: yes
+  changed_when: false
+
+- set_fact:
+    docker_installed: "{{ docker_check.rc == 0 }}"
+
+- debug:
+    msg: "Docker installed: {{ docker_installed }}"
+
+# 👉 KEIN blindes Stoppen mehr – wir unterscheiden Install vs. Upgrade
+- name: Include install if not present
+  include_tasks: install.yml
+  when: not docker_installed
+
+- name: Validate installation / state
+  include_tasks: validate.yml
