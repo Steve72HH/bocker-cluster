@@ -1,0 +1,6 @@
+---
+- name: Init Swarm
+  hosts: manager[0]
+  become: yes
+  roles:
+    - swarm
