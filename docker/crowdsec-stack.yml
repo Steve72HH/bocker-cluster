@@ -1,0 +1,5 @@
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec
+    volumes:
+      - ./files/crowdsec:/etc/crowdsec
