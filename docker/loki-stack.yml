@@ -1,0 +1,9 @@
+services:
+  loki:
+    image: grafana/loki
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail
+    volumes:
+      - /var/log:/var/log
