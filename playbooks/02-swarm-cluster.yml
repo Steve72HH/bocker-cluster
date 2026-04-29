@@ -1,0 +1,44 @@
+---
+- name: Init swarm on first manager
+  hosts: manager[0]
+  become: yes
+  tasks:
+    - name: Init swarm
+      shell: docker swarm init --advertise-addr {{ ansible_host }}
+      register: init_out
+      failed_when: false
+      changed_when: "'Swarm initialized' in init_out.stdout"
+
+    - name: Get manager token
+      shell: docker swarm join-token -q manager
+      register: mtoken
+
+    - name: Get worker token
+      shell: docker swarm join-token -q worker
+      register: wtoken
+
+    - set_fact:
+        manager_token: "{{ mtoken.stdout }}"
+        worker_token: "{{ wtoken.stdout }}"
+
+- name: Join other managers
+  hosts: manager[1:]
+  become: yes
+  tasks:
+    - shell: >
+        docker swarm join
+        --token {{ hostvars[groups['manager'][0]].manager_token }}
+        {{ hostvars[groups['manager'][0]].ansible_host }}:2377
+      register: join_m
+      failed_when: false
+
+- name: Join workers
+  hosts: worker
+  become: yes
+  tasks:
+    - shell: >
+        docker swarm join
+        --token {{ hostvars[groups['manager'][0]].worker_token }}
+        {{ hostvars[groups['manager'][0]].ansible_host }}:2377
+      register: join_w
+      failed_when: false
