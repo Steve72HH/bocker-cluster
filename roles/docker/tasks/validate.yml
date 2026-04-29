@@ -1,0 +1,29 @@
+---
+- name: Check docker service
+  systemd:
+    name: docker
+  register: docker_service
+
+- name: Fail if docker not running
+  fail:
+    msg: "Docker service is not running!"
+  when: docker_service.status.ActiveState != "active"
+
+- name: Check docker socket
+  stat:
+    path: /var/run/docker.sock
+  register: sock
+
+- name: Fail if socket missing
+  fail:
+    msg: "Docker socket missing!"
+  when: not sock.stat.exists
+
+- name: Get docker version
+  command: docker version --format '{{ "{{.Server.Version}}" }}'
+  register: docker_version_out
+  changed_when: false
+
+- name: Debug version
+  debug:
+    msg: "Docker version: {{ docker_version_out.stdout }}"
