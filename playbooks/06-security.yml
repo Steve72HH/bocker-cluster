@@ -1,0 +1,8 @@
+---
+- name: Install CrowdSec
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install CrowdSec
+      apt:
+        name: crowdsec
