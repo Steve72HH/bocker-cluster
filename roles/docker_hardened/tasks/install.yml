@@ -1,0 +1,29 @@
+- apt:
+    name: [ca-certificates, curl, gnupg]
+    update_cache: yes
+
+- file:
+    path: /etc/apt/keyrings
+    state: directory
+
+- shell: |
+    curl -fsSL https://download.docker.com/linux/debian/gpg | \
+    gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  args:
+    creates: /etc/apt/keyrings/docker.gpg
+
+- apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+
+- apt:
+    name: "{{ docker_packages }}"
+    update_cache: yes
+
+- template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+
+- systemd:
+    name: docker
+    state: started
+    enabled: yes
