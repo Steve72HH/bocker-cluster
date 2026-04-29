@@ -26,5 +26,14 @@ This diagram shows the core components of the BOCKER Cluster:
 - Monitoring via Prometheus & Grafana
 - Security via CrowdSec & Fail2Ban
 
+## 🔥 Features
+Idempotent Ansible
+High Availability
+Secure by default
+Production ready
+## 👨‍💻 Author
+
+Steve72HH
+
 ![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/bocker-cluster.png)
 ![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/Bocker-Cluster-System-Architektur.png)
