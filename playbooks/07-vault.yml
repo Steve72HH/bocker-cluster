@@ -1,0 +1,4 @@
+- name: Deploy Vault
+  hosts: manager[0]
+  tasks:
+    - shell: docker stack deploy -c docker/vault-stack.yml vault
