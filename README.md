@@ -27,3 +27,4 @@ This diagram shows the core components of the BOCKER Cluster:
 - Security via CrowdSec & Fail2Ban
 
 ![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/bocker-cluster.png)
+![Bocker Cluster](https://github.com/Steve72HH/bocker-cluster/blob/main/Bocker-Cluster-System-Architektur.png)
