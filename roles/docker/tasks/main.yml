@@ -1,0 +1,44 @@
+- name: Check docker
+  command: docker --version
+  register: docker_check
+  ignore_errors: yes
+  changed_when: false
+
+- name: Set fact
+  set_fact:
+    docker_installed: "{{ docker_check.rc == 0 }}"
+
+- name: Stop if Docker exists
+  meta: end_host
+  when: docker_installed
+
+- name: Install dependencies
+  apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+      - iftop
+      - jq
+      - wget
+      
+    update_cache: yes
+
+- name: Add Docker repo
+  shell: |
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    update_cache: yes
+
+- name: Start Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
