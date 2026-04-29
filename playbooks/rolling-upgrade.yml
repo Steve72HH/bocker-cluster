@@ -1,0 +1,14 @@
+- hosts: worker
+  serial: 1
+  become: yes
+  tasks:
+    - name: Drain node
+      shell: docker node update --availability drain {{ inventory_hostname }}
+
+    - name: Upgrade Docker
+      apt:
+        name: docker-ce
+        state: latest
+
+    - name: Activate node
+      shell: docker node update --availability active {{ inventory_hostname }}
