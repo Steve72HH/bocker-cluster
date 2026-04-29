@@ -1,0 +1,6 @@
+domain: <deine domain>
+email: <deine email>
+
+traefik_domain: traefik.<deine domain>
+grafana_domain: grafana.<deine domain>
+auth_domain: auth.<deine domain>
